@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-static-top.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  	<nav class="navbar navbar-default" role="navigation">
+	  <!-- Brand and toggle get grouped for better mobile display -->
+	  <div class="navbar-header">
+	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	      <span class="sr-only">Toggle navigation</span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    <a class="navbar-brand" href="#">Crossword Dashboard</a>
+	  </div>
+	
+	  <!-- Collect the nav links, forms, and other content for toggling -->
+	  <div class="collapse navbar-collapse navbar-ex1-collapse">
+	    	    <ul class="nav navbar-nav">
+	      <li><a href="#">Overview</a></li>
+	      <li><a href="#">Statistics</a></li>
+	      <li class="active"><a href="/beacons">Manage Beacons</a></li>
+	      <li><a href="/groups">Manage Groups</a></li>
+	      <li><a href="/triggers">Manage Triggers</a></li>
+	      
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><p class="navbar-text">Residency Road</p></li>
+	      <li class="dropdown">
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations<b class="caret"></b></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#"></a></li>
+	          <li class="active"><a href="#">Residency Road</a></li>
+	          <li><a href="#">Indiranagar</a></li>
+	          <li><a href="#">Marathahalli</a></li>
+	        </ul>
+	      </li>
+	    </ul>
+	  </div><!-- /.navbar-collapse -->
+	</nav>
+
+	
+    <div class="container">
+    	{% if beacon.valid %}
+		    	{% if beacon.notnew %}
+		    	<div class="row" style="padding:10px;">
+		    		<div class="alert alert-info">
+		    			<h4><strong>Beacon Properties</strong></h4>
+		    			<p>Add/edit your beacon properties here</p>
+		    		</div>
+		    	</div>
+		    	<div class="row">
+			    	<div class="col-md-8">
+					    <form class="form-horizontal" action="/addbeacon" method="POST">
+							<fieldset>
+		
+							
+							<!-- Text input-->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="nickname">Nickname</label>  
+							  <div class="col-md-8">
+							  
+							  <input id="nickname" name="nickname" type="text" placeholder="Blue Beacon" value="{{ beacon.nickname }}" class="form-control input-md" required="">
+							  <span class="help-block">Nicknames are only used for your convenience. </span>  
+							  </div>
+							</div>
+							
+							<!-- Text input-->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="beaconid">Beacon UUID</label>  
+							  <div class="col-md-8">
+							  <input id="beaconid" name="beaconuuid" type="text" placeholder="Ex. 124414" value="{{ beacon.uuid }}" class="form-control input-md" required="">
+							  <input type='hidden' name='beaconid' value='{{beacon.id}}' />
+							  <span class="help-block">Your Beacon's Unique Identifier</span>  
+							  </div>
+							</div>
+							
+							<!-- Multiple Checkboxes -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="checkboxes">Select Groups</label>
+							  <div class="col-md-8">
+							  {% for group in beacon.groups %}
+							  <div class="checkbox">
+							    <label for="groupid">
+							      <input type="checkbox" name="groupid" id="groupid" value="{{group.id}}" 
+							      {% if group.valid %}checked{%endif%}>{{group.nickname}}</label>
+								</div>
+							{% endfor %}
+							<span class="help-block">Select one or more groups</span>
+							</div>
+							</div>
+							
+							
+							<!-- Button -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="submit">and lastly</label>
+							  <div class="col-md-5">
+							    <button id="submit" name="submit" class="btn btn-success">Save Beacon</button>
+							  </div>
+							</div>
+							
+							</fieldset>
+						</form>
+					</div>
+		    	</div>
+		    	{% else %}
+		    	<div class="row" style="padding:10px;">
+		    		<div class="alert alert-info">
+		    			<h4><strong>Beacon Properties</strong></h4>
+		    			<p>Add/edit your beacon properties here</p>
+		    		</div>
+		    	</div>
+		    	<div class="row">
+			    	<div class="col-md-8">
+					    <form class="form-horizontal" action="/addbeacon" method="POST">
+							<fieldset>
+		
+							
+							<!-- Text input-->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="nickname">Nickname</label>  
+							  <div class="col-md-8">
+							  
+							  <input id="nickname" name="nickname" type="text" placeholder="" class="form-control input-md" required="">
+							  <span class="help-block">Nicknames are only used for your convenience. </span>  
+							  </div>
+							</div>
+							
+							<!-- Text input-->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="beaconid">Beacon UUID</label>  
+							  <div class="col-md-8">
+							  <input id="beaconid" name="beaconuuid" type="text" placeholder="Ex. 124414" class="form-control input-md" required="">
+							  <span class="help-block">Your Beacon's Unique Identifier</span>  
+							  </div>
+							</div>
+							{% if beacon.groups %}
+							<!-- Multiple Checkboxes -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="checkboxes">Select Groups</label>
+							  <div class="col-md-8">
+							  {% for group in beacon.groups %}
+							  <div class="checkbox">
+							    <label for="groupid">
+							      <input type="checkbox" name="groupid" id="groupid" value="{{group.id}}" 
+							      {% if group.valid %}checked{%endif%}>{{group.nickname}}</label>
+							   </div>
+							{% endfor %}
+							<span class="help-block">Select one or more groups</span>
+							</div>
+							</div>
+							{% else %}
+							<div class="form-group">
+							  <div class="col-md-4"></div>
+							  <label class="col-md-4">No groups defined yet</label>
+							</div>
+							{% endif%}
+							<!-- Button -->
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="submit">and lastly</label>
+							  <div class="col-md-5">
+							    <button id="submit" name="submit" class="btn btn-success">Add Beacon</button>
+							  </div>
+							</div>
+							
+							</fieldset>
+						</form>
+					</div>
+		    	</div>    	
+		    	{% endif %}
+		{% else %}
+		<div class="row">
+				<div class="col-md-8">
+					<h1>Uhm... Something went wrong.</h1>
+				</div>
+		</div>
+		{% endif %}
+    </div> 
+    <!-- /container -->
+    
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>
