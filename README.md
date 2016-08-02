@@ -1,7 +1,7 @@
 Clevrly
 ======
 
-Hackathon Prototype--
+###Hackathon Prototype
 
 Uses iBeacons to triangulate the distance to your phone.
 Current Accuracy = 20cm ~ 10 m
